@@ -1,0 +1,4 @@
+type: meya.orb.integration
+theme:
+  brand_color: '#e45567'
+  bot_avatar_monogram: E
