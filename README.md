@@ -2,7 +2,9 @@
 
 # demo-ecommerce
 
-E-commerce demo
+E-commerce demo.
+
+Try it live here: [Codepen](https://codepen.io/ekalvi/pen/2d95e95092909aa05c7859058fdacd17)
 
 ## Setup
 
