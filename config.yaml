@@ -1,3 +1,5 @@
+store:
+  name: Acme
 icon:
   typing: streamline-light/21-messages-chat-smileys/02-messages-speech-bubbles/messages-bubble-square-typing.svg
   person: streamline-light/21-messages-chat-smileys/01-messages-people/messages-people-person-bubble-oval-1.svg

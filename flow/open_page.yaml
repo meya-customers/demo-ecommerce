@@ -1,8 +1,24 @@
 triggers:
   - type: page_open
-    when: (@ not thread.open_page )
+  - keyword: start
 
 steps:
-  - say: Hey, welcome!
-  - thread_set:
-      open_page: true
+  # TODO: read user from database
+  - user_set:
+      name: Erik
+      id: u0
+  - say: Hi (@ user.name ), I'm (@ config.store.name )'s digital assistant! Thank
+      you for visiting! How can I help you today?
+    quick_replies:
+      - text: Show Orders
+        action:
+          flow: flow.orders
+          transfer: true
+      - text: Get Refund
+        action:
+          flow: flow.refund
+          transfer: true
+      - text: Find Store
+        action:
+          flow: flow.store_locator
+          transfer: true
