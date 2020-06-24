@@ -1,5 +1,7 @@
 triggers:
-  - type: page_open
+  - button_id: .page-load
+    action:
+      jump: auth
   - keyword: start
 
 steps:

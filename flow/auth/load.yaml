@@ -1,7 +1,4 @@
 triggers:
-  - button_id: .page-load
-    action:
-      jump: page
   - regex: ^user_(.*)$
     action:
       jump: regex
@@ -18,6 +15,7 @@ steps:
   - jump: check
 
   - (check)
+  - say: USER (@ flow.user_id )
   - flow: flow.auth.check
     data:
       user_id: (@ flow.user_id )
