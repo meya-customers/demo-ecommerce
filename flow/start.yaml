@@ -1,16 +1,9 @@
 triggers:
-  - button_id: .page-load
-    action:
-      jump: auth
   - keyword: start
 
 steps:
   - (auth)
-  - flow_set:
-      user_id: (@ flow.event.data.context.user_id )
   - flow: flow.auth.check
-    data:
-      user_id: (@ flow.user_id )
   - if: (@ flow.result )
     then: next
     else:
