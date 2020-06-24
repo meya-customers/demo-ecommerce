@@ -20,6 +20,8 @@ class Order(Model):
     user_id: str = None
     product_ids: List[str] = None
     status: OrderStatus = None
+    # TODO: change to absolute date
+    eta: int = None  # days, relative to today
 
     # FK
     user: User = None

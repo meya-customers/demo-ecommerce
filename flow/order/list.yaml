@@ -8,4 +8,48 @@ steps:
   - say: Here are the orders I found...
   - type: component.order.display
     orders: (@ flow.result )
-  - say: selected (@ flow.result )
+  - type: component.order.get
+    order_id: (@ flow.result )
+  - case:
+      processing:
+        jump: processing
+      shipped:
+        jump: shipped
+    default:
+      jump: cant_help
+    value: (@ flow.result.status )
+
+  - (processing)
+  - say: processing
+  - say: Is there something you need help with on this order?
+    quick_replies:
+      - text: Change my item
+        action:
+          jump: cant_help
+      - text: Update shipping address
+        action:
+          jump: cant_help
+      - text: Cancel my item
+        action:
+          flow: flow.order.cancel
+          transfer: true
+      - text: Nevermind
+        action:
+          flow: flow.start
+          transfer: true
+
+  - (shipped)
+  - say: Your order is expected to arrive in (@ flow.result.eta ) days.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
+
+  - (cant_help)
+  - say: Sorry, I can't help you with this yet, but I'm learning.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
