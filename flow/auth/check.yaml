@@ -7,16 +7,21 @@ steps:
   #  user (obj) - user objects is updated with user model
   #  OR
   #  forbidden
-  - type: component.user.get
-    user_id: (@ flow.get("user_id") or user.id )
-  - if: (@ flow.result )
+  - flow_set:
+      user_id: (@ flow.get("user_id") or user.id )
+  - if: (@ flow.user_id )
     then: next
     else:
       jump: fail
-  - user_set:
-      id: (@ flow.result.id )
-      name: (@ flow.result.name )
-      email: (@ flow.result.email )
+  - type: component.user.get
+    user_id: (@ flow.user_id )
+  - if: (@ flow.get("result") )
+    then: next
+    else:
+      jump: fail
+  - flow: flow.auth.login
+    data:
+      user: (@ flow.result )
   - end:
       result: true
 

@@ -3,5 +3,3 @@ steps:
       id:
       name:
       email:
-  # TODO: handle this UX gracefully
-  - say: 403 forbidden

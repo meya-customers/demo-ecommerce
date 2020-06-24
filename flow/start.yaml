@@ -3,14 +3,12 @@ triggers:
   - keyword: start
 
 steps:
-  # TODO: move this to button trigger
-  - user_set:
-      id: u-12345
   - (auth)
   - flow: flow.auth.check
   - if: (@ flow.result )
     then: next
-    else: end
+    else:
+      jump: login
 
   - (welcome)
   - say: |
@@ -29,6 +27,7 @@ steps:
         action:
           flow: flow.store.locator
           transfer: true
-    # TODO: move to bot settings
-    composer:
-      visibility: hide
+  - end
+
+  - (login)
+  - say: You have to login first.
