@@ -5,6 +5,32 @@ from typing import List
 
 def objects() -> List[Order]:
     _ = list()
-    _.append(Order(user="u0", products=["p0"], status=OrderStatus.SHIPPED))
-    _.append(Order(user="u0", products=["p1"], status=OrderStatus.PROCESSING))
+    _.append(
+        Order(
+            user_id="u-12345",
+            product_ids=["p-12345"],
+            status=OrderStatus.SHIPPED,
+        )
+    )
+    _.append(
+        Order(
+            user_id="u-12345",
+            product_ids=["p-67890"],
+            status=OrderStatus.PROCESSING,
+        )
+    )
+    _.append(
+        Order(
+            user_id="u-67890",
+            product_ids=["p-31415"],
+            status=OrderStatus.SHIPPED,
+        )
+    )
+    _.append(
+        Order(
+            user_id="u-67890",
+            product_ids=["p-27182"],
+            status=OrderStatus.DELIVERED,
+        )
+    )
     return _

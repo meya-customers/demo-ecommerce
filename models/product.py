@@ -12,4 +12,9 @@ class Product(Model):
 
     @classmethod
     def all(cls) -> QuerySet:
-        pass
+        # avoid circular import
+        from db.products import objects
+
+        qs = QuerySet()
+        qs.extend(objects())
+        return qs

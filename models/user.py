@@ -10,4 +10,9 @@ class User(Model):
 
     @classmethod
     def all(cls) -> QuerySet:
-        pass
+        # avoid circular import
+        from db.users import objects
+
+        qs = QuerySet()
+        qs.extend(objects())
+        return qs
