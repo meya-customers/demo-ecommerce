@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    localStorage.clear()
+    window.orbConfig = {
+        connectionOptions: {
+            gridUrl: "https://grid.meya.ai",
+            appId: "app-a593abe881b7423daa21f1b190abd43e",
+            integrationId: "integration.orb",
+            onFirstConnect: function (connectPayload) {
+                orbButtonClick(".page-open", null, {"user_id": "u-12345"});
+                if (connectPayload.magic_link_event) {
+                    orbPublish(connectPayload.magic_link_event)
+                }
+            }
+        },
+        theme: {
+            "brandColor": "#e45567",
+            "botAvatarMonogram": "E",
+            "botAvatarUrl": "https://images.prismic.io/meya-website/25ddc2ae-54e5-4fbe-91dc-5be385243b4d_cart.png"
+        },
+        windowFunctions: true,
+    };
+    (function () {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "https://cdn.meya.ai/v2/orb.js";
+        document.body.appendChild(script);
+        var fontStyleSheet = document.createElement("link");
+        fontStyleSheet.rel = "stylesheet";
+        fontStyleSheet.href = "https://cdn.meya.ai/font/inter.css";
+        document.body.appendChild(fontStyleSheet);
+    })();
+</script>
