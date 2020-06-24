@@ -1,5 +1,6 @@
 steps:
   - user_set:
       id: (@ flow.user.id )
-      name: (@ flow.user.name )
+      first_name: (@ flow.user.first_name )
+      last_name: (@ flow.user.last_name )
       email: (@ flow.user.email )

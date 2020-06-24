@@ -5,7 +5,8 @@ from models.base import QuerySet
 
 @dataclass
 class User(Model):
-    name: str = None
+    first_name: str = None
+    last_name: str = None
     email: str = None
 
     @classmethod

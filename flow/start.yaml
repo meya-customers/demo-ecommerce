@@ -12,7 +12,7 @@ steps:
 
   - (welcome)
   - say: |
-      Hi (@ user.name ), I'm (@ config.store.name )'s digital assistant.
+      Hi (@ user.first_name ), I'm (@ config.store.name )'s digital assistant.
       How can I help you today?
     quick_replies:
       - text: See my orders

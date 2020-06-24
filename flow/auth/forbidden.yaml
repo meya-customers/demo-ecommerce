@@ -1,5 +1,6 @@
 steps:
   - user_set:
       id:
-      name:
+      first_name:
+      last_name:
       email:
