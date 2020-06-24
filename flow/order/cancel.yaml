@@ -1,8 +1,16 @@
 steps:
   - say: I can help you with that, just let us know the reason you're cancelling
+    # TODO: move to bot settings
+    composer:
+      visibility: hide
+
   - ask_form: Note that any discounts that you used will be forfeited and can no longer
       be used.
     label: Please specify
+    # TODO: move to bot settings
+    composer:
+      visibility: hide
+
   - say: |
       I have gone ahead and put in a request to cancel this item from your order.
       You will receive an email confirmation once this has been processed within 1 business day.

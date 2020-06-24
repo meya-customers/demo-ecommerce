@@ -4,6 +4,7 @@ from meya.component.element import Component
 from meya.element.field import element_field
 from meya.entry import Entry
 from meya.orb.composer_spec import ComposerEventSpec
+from meya.orb.composer_spec import ComposerVisibility
 from meya.tile.event.ask import TileAskEvent
 from meya.tile.spec import TileButtonStyle
 from meya.tile.spec import TileCell
@@ -44,8 +45,9 @@ class OrderDisplayComponent(Component):
             )
             tiles.append(tile)
 
+        # TODO: move to bot settings
         event = TileAskEvent(
-            composer=ComposerEventSpec(),
+            composer=ComposerEventSpec(visibility=ComposerVisibility.HIDE),
             member_id=generate_member_id(self.entry.bot_id),
             quick_replies=[],
             text=None,

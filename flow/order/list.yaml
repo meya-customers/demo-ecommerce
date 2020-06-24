@@ -6,6 +6,10 @@ steps:
   - type: component.order.list
     user_id: (@ user.id )
   - say: Here are the orders I found...
+    # TODO: move to bot settings
+    composer:
+      visibility: hide
+  - delay: 1
   - type: component.order.display
     orders: (@ flow.result )
   - type: component.order.get
@@ -20,7 +24,11 @@ steps:
     value: (@ flow.result.status )
 
   - (processing)
-  - say: processing
+  - say: |
+      Your order is still processing and could take up to 5 days to ship.
+      We'll notify you when tracking is available.
+    composer:
+      visibility: hide
   - say: Is there something you need help with on this order?
     quick_replies:
       - text: Change my item
@@ -37,6 +45,9 @@ steps:
         action:
           flow: flow.start
           transfer: true
+    # TODO: move to bot settings
+    composer:
+      visibility: hide
 
   - (shipped)
   - say: Your order is expected to arrive in (@ flow.result.eta ) days.

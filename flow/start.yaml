@@ -29,3 +29,6 @@ steps:
         action:
           flow: flow.store.locator
           transfer: true
+    # TODO: move to bot settings
+    composer:
+      visibility: hide
