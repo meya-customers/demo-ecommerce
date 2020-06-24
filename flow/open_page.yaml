@@ -3,22 +3,28 @@ triggers:
   - keyword: start
 
 steps:
-  # TODO: read user from database
+  # TODO: move this to button trigger
   - user_set:
-      name: Erik
-      id: u0
+      id: u-12345
+  - (auth)
+  - flow: flow.auth.check
+  - if: (@ flow.result )
+    then: next
+    else: end
+
+  - (welcome)
   - say: Hi (@ user.name ), I'm (@ config.store.name )'s digital assistant! Thank
       you for visiting! How can I help you today?
     quick_replies:
       - text: Show Orders
         action:
-          flow: flow.orders
+          flow: flow.order.list
           transfer: true
       - text: Get Refund
         action:
-          flow: flow.refund
+          flow: flow.order.refund
           transfer: true
       - text: Find Store
         action:
-          flow: flow.store_locator
+          flow: flow.store.locator
           transfer: true

@@ -8,7 +8,7 @@ from typing import List
 
 
 @dataclass
-class ListOrdersComponent(Component):
+class OrderListComponent(Component):
     user_id: str = element_field()
 
     @dataclass
@@ -16,5 +16,5 @@ class ListOrdersComponent(Component):
         result: List[Order] = response_field()
 
     async def start(self) -> List[Entry]:
-        orders = list(Order.filter(user=self.user_id))
+        orders = list(Order.filter(user_id=self.user_id))
         return self.respond(data=self.Response(result=orders))
