@@ -1,2 +1,13 @@
 steps:
-  - say: cancel
+  - say: I can help you with that, just let us know the reason you're cancelling
+  - ask_form: Note that any discounts that you used will be forfeited and can no longer
+      be used.
+    label: Please specify
+  - say: |
+      I have gone ahead and put in a request to cancel this item from your order.
+      You will receive an email confirmation once this has been processed within 1 business day.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true

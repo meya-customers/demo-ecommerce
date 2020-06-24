@@ -28,7 +28,7 @@ def objects() -> List[Order]:
             id="o-3",
             user_id="u-67890",
             product_ids=["p-11111"],
-            status=OrderStatus.SHIPPED,
+            status=OrderStatus.PROCESSING,
             eta=3,
         )
     )
