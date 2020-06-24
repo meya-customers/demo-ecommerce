@@ -45,8 +45,8 @@ class OrderDisplayComponent(Component):
             )
             tiles.append(tile)
 
-        # TODO: move to bot settings
         event = TileAskEvent(
+            # TODO: move to bot settings
             composer=ComposerEventSpec(visibility=ComposerVisibility.HIDE),
             member_id=generate_member_id(self.entry.bot_id),
             quick_replies=[],
