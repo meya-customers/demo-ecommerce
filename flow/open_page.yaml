@@ -13,18 +13,19 @@ steps:
     else: end
 
   - (welcome)
-  - say: Hi (@ user.name ), I'm (@ config.store.name )'s digital assistant! Thank
-      you for visiting! How can I help you today?
+  - say: |
+      Hi (@ user.name ), I'm (@ config.store.name )'s digital assistant.
+      How can I help you today?
     quick_replies:
-      - text: Show Orders
+      - text: See my orders
         action:
           flow: flow.order.list
           transfer: true
-      - text: Get Refund
+      - text: Get a refund
         action:
           flow: flow.order.refund
           transfer: true
-      - text: Find Store
+      - text: Find a store
         action:
           flow: flow.store.locator
           transfer: true

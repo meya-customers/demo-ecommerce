@@ -1,4 +1,3 @@
-
 steps:
   # In:
   #  flow.user_id (str) - id of current user passed in from page

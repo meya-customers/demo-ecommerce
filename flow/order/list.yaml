@@ -3,7 +3,9 @@ steps:
   #  user.id (str) - id of current user passed in from page
   # Out:
   #  flow.order_id (str) - id of selected order
-  - say: get order
   - type: component.order.list
     user_id: (@ user.id )
-  - say: orders (@ flow.result )
+  - say: Here are the orders I found...
+  - type: component.order.display
+    orders: (@ flow.result )
+  - say: selected (@ flow.result )

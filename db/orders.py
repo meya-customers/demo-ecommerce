@@ -8,21 +8,21 @@ def objects() -> List[Order]:
     _.append(
         Order(
             user_id="u-12345",
-            product_ids=["p-12345"],
+            product_ids=["p-67890"],
             status=OrderStatus.SHIPPED,
         )
     )
     _.append(
         Order(
             user_id="u-12345",
-            product_ids=["p-67890"],
+            product_ids=["p-33333"],
             status=OrderStatus.PROCESSING,
         )
     )
     _.append(
         Order(
             user_id="u-67890",
-            product_ids=["p-31415"],
+            product_ids=["p-11111"],
             status=OrderStatus.SHIPPED,
         )
     )
