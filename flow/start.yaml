@@ -1,0 +1,32 @@
+triggers:
+  - keyword: start
+
+steps:
+  - (auth)
+  - flow: flow.auth.check
+  - if: (@ flow.result )
+    then: next
+    else:
+      jump: login
+
+  - (welcome)
+  - say: |
+      Hi (@ user.first_name ), I'm (@ config.store.name )'s digital assistant.
+      How can I help you today?
+    quick_replies:
+      - text: See my orders
+        action:
+          flow: flow.order.list
+          transfer: true
+      - text: Get a refund
+        action:
+          flow: flow.order.refund
+          transfer: true
+      - text: Find a store
+        action:
+          flow: flow.store.locator
+          transfer: true
+  - end
+
+  - (login)
+  - say: You have to login first.

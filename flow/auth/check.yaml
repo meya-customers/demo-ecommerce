@@ -1,0 +1,32 @@
+steps:
+  # In:
+  #  flow.user_id (str) - id of current user passed in from page
+  #  OR
+  #  user.id
+  # Out:
+  #  user (obj) - user objects is updated with user model
+  #  OR
+  #  forbidden
+  - flow_set:
+      user_id: (@ flow.get("user_id") or user.id )
+  - if: (@ flow.user_id )
+    then: next
+    else:
+      jump: fail
+  - type: component.user.get
+    user_id: (@ flow.user_id )
+  - if: (@ flow.get("result") )
+    then: next
+    else:
+      jump: fail
+  - flow: flow.auth.login
+    data:
+      user: (@ flow.result )
+  - end:
+      result: true
+
+  - (fail)
+  - flow: flow.auth.forbidden
+    # TODO: remove this once transfer: true is fixed
+  - end:
+      result: false

@@ -1,0 +1,6 @@
+type: meya.orb.integration
+theme:
+  brand_color: '#e45567'
+  bot_avatar_monogram: E
+  bot_avatar_url: >-
+    https://images.prismic.io/meya-website/25ddc2ae-54e5-4fbe-91dc-5be385243b4d_cart.png

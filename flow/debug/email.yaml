@@ -1,0 +1,43 @@
+triggers:
+  - keyword: email
+
+steps:
+  - say: 💌 Let's test sending an email.
+  - ask_form: What email to send to?
+    expect: email_address
+  - flow_set: email
+  - ask_form: Name?
+    icon: (@ config.icon.person )
+    label: Name
+  - flow_set: name
+  - ask_form: Subject?
+    icon: (@ config.icon.typing )
+    label: Subject
+  - flow_set: subject
+  - ask_form: Email body?
+    icon: (@ config.icon.typing )
+    label: Body
+  - flow_set: text
+  - flow_set:
+      html:
+  - (send)
+  - type: meya.mailgun.component.send
+    integration: integration.mailgun
+    wait_for_response: true
+    to:
+      - name: (@ flow.name )
+        email: (@ flow.email )
+    from:
+      name: Meya Support
+      email: support@meya.ai
+    subject: (@ flow.subject )
+    text: (@ flow.text )
+    html: (@ flow.html )
+  - if: (@ flow.ok )
+    then: next
+    else:
+      jump: fail
+  - say: Done. Check (@ flow.email ) for an email. (@ flow.result )
+  - end
+  - (fail)
+  - say: Mailgun API failed. (@ flow.result )
