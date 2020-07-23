@@ -4,7 +4,7 @@ steps:
   # Out:
   #  flow.order_id (str) - id of selected order
   - type: component.order.list
-    user_id: (@ user.id )
+    user_id: (@ user.user_id )
   - say: Here are the orders I found...
     # TODO: move to bot settings
     composer:

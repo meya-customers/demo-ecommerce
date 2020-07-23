@@ -5,19 +5,10 @@
             gridUrl: "https://grid.meya.ai",
             appId: "app-a593abe881b7423daa21f1b190abd43e",
             integrationId: "integration.orb",
-            onFirstConnect: function (connectPayload) {
-                orbButtonClick(".page-open", null, {"user_id": "u-12345"});
-                if (connectPayload.magic_link_event) {
-                    orbPublish(connectPayload.magic_link_event)
-                }
-            }
+            pageContext: {"user_id": "u-67890"}
         },
-        theme: {
-            "brandColor": "#e45567",
-            "botAvatarMonogram": "E",
-            "botAvatarUrl": "https://images.prismic.io/meya-website/25ddc2ae-54e5-4fbe-91dc-5be385243b4d_cart.png"
-        },
-        windowFunctions: true,
+        theme: {"brandColor": "#e45567"},
+        windowApi: true,
     };
     (function () {
         var script = document.createElement("script");

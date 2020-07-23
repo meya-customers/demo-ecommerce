@@ -8,7 +8,7 @@ steps:
   #  OR
   #  forbidden
   - flow_set:
-      user_id: (@ flow.get("user_id") or user.id )
+      user_id: (@ flow.get("user_id") or user.user_id )
   - if: (@ flow.user_id )
     then: next
     else:

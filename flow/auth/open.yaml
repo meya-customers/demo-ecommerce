@@ -1,7 +1,5 @@
 triggers:
-  - button_id: .page-open
-    action:
-      jump: page
+  - page_open
   - regex: ^user_(.*)$
     action:
       jump: regex
@@ -9,7 +7,7 @@ triggers:
 steps:
   - (page)
   - flow_set:
-      user_id: (@ flow.event.data.context.user_id )
+      user_id: (@ flow.context.user_id )
   - jump: check
 
   - (regex)

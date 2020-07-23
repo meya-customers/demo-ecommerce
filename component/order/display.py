@@ -11,7 +11,6 @@ from meya.tile.spec import TileCell
 from meya.tile.spec import TileEventSpec
 from meya.tile.spec import TileImage
 from meya.tile.spec import TileLayout
-from meya.util.generate_id import generate_member_id
 from models.order import Order
 from typing import List
 
@@ -48,12 +47,9 @@ class OrderDisplayComponent(Component):
         event = TileAskEvent(
             # TODO: move to bot settings
             composer=ComposerEventSpec(visibility=ComposerVisibility.HIDE),
-            member_id=generate_member_id(self.entry.bot_id),
-            quick_replies=[],
-            text=None,
             button_style=TileButtonStyle.TEXT,
+            text=None,
             tiles=tiles,
-            thread_id=self.entry.thread_id,
             layout=TileLayout.ROW,
         )
         return self.respond(event, *triggers)
