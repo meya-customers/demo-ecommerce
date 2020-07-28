@@ -1,0 +1,14 @@
+triggers:
+  - expect: dialogflow
+    integration: integration.dialogflow
+
+steps:
+  - match:
+      ^smalltalk\.:
+        flow: flow.nlu.smalltalk
+        data: (@ flow )
+      ^shipping:
+        flow: flow.nlu.shipping
+        data: (@ flow )
+    default:
+      flow: flow.start

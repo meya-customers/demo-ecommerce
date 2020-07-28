@@ -1,2 +1,3 @@
 mailgun.api_key: xxx
 mailgun.domain: xxx
+dialogflow.service_account_key: xxx
