@@ -38,7 +38,7 @@ def objects() -> List[Order]:
             user_id="u-67890",
             product_ids=["p-27182"],
             status=OrderStatus.DELIVERED,
-            eta=-1,
+            eta=-2,
         )
     )
     return _

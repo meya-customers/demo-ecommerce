@@ -1,0 +1,24 @@
+# requires:
+#   order_id (str)
+
+triggers:
+  - keyword: order_return
+    action:
+      jump: start
+      data:
+        order_id: o-4
+
+steps:
+  - (start)
+  - type: component.order.get
+    order_id: (@ flow.order_id )
+  - flow_set: order
+  - type: component.product.get
+    product_id: (@ flow.order.product_ids[0] )
+  - flow_set: product
+  - say: >
+      Before we can approve your return, I need to bring a human to help.
+      One moment, while I get someone...
+  - flow: flow.escalate.ticket
+    data:
+      subject: 'Return -> Order #(@ flow.order.id ) - (@ flow.product.name )'

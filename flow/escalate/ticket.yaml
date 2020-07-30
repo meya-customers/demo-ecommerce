@@ -1,0 +1,23 @@
+# optional:
+#   subject (str)
+#   comment (str)
+# requires:
+#   user.first_name (str)
+#   user.last_name (str)
+#   user.email (str)
+
+triggers:
+  - keyword: escalate_ticket
+
+steps:
+  - (create)
+  - type: meya.zendesk.support.component.user.create_or_update
+    integration: integration.zendesk.support
+    name: (@ user.first_name ) (@ user.last_name )
+    email: (@ user.email )
+  - type: meya.zendesk.support.component.ticket.create
+    integration: integration.zendesk.support
+    requester_id: (@ flow.result.id )
+    subject: (@ flow.get("subject") )
+    comment: (@ flow.get("comment") )
+  - say: 'Ticket #(@ flow.result.id ) created. An agent will be here shortly...'

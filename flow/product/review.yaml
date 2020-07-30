@@ -1,0 +1,12 @@
+# requires:
+#   product_ids (List[str])
+
+triggers:
+  - keyword: product_review
+    action:
+      jump: start
+      data:
+        product_id: p-27182
+steps:
+  - (start)
+  - say: Product review -> (@ flow.product_id )

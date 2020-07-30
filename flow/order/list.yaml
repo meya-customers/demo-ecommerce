@@ -19,6 +19,8 @@ steps:
         jump: processing
       shipped:
         jump: shipped
+      delivered:
+        jump: delivered
     default:
       jump: cant_help
     value: (@ flow.result.status )
@@ -53,6 +55,28 @@ steps:
   - say: Your order is expected to arrive in (@ flow.result.eta ) days.
     quick_replies:
       - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
+
+  - (delivered)
+  - say: >
+      Your order was delivered (@ flow.result.eta * -1 ) days ago.
+      What would like help with?
+    quick_replies:
+      - text: Return item
+        action:
+          flow: flow.order.return
+          data:
+            order_id: (@ flow.result.id )
+          transfer: true
+      - text: Write product review
+        action:
+          flow: flow.product.review
+          data:
+            product_id: (@ flow.result.product_ids[0] )
+          transfer: true
+      - text: Nevermind
         action:
           flow: flow.start
           transfer: true
