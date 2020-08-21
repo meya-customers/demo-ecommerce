@@ -6,6 +6,11 @@ triggers:
 
 steps:
   - (page)
+  - if: (@ flow.context.get("user_id") )
+    then: next
+    else:
+      flow: flow.start
+      transfer: true
   - flow_set:
       user_id: (@ flow.context.user_id )
   - jump: check

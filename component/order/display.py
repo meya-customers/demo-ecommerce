@@ -46,7 +46,7 @@ class OrderDisplayComponent(Component):
 
         event = TileAskEvent(
             # TODO: move to bot settings
-            composer=ComposerEventSpec(visibility=ComposerVisibility.HIDE),
+            # composer=ComposerEventSpec(visibility=ComposerVisibility.HIDE),
             button_style=TileButtonStyle.TEXT,
             text=None,
             tiles=tiles,
