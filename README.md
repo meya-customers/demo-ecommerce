@@ -6,6 +6,14 @@ E-commerce demo.
 
 Try it live here: [Codepen](https://codepen.io/ekalvi/pen/2d95e95092909aa05c7859058fdacd17)
 
+## Use-cases
+- On page pre-authentication
+- Order status
+- Return w/ human escalation
+- E-commerce NLU (via Dialogflow)
+- Smalltalk NLU (via Dialogflow)
+- Zendesk Support ticket escalation
+
 ## Setup
 
 ```shell script

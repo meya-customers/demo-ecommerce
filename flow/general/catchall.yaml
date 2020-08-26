@@ -3,3 +3,7 @@ triggers:
 
 steps:
   - say: Sorry, I don't understand.
+    quick_replies:
+      - text: Speak to an agent
+        action:
+          flow: flow.escalate.ticket
