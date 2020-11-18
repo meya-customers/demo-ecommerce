@@ -12,13 +12,24 @@ steps:
   - (start)
   - type: component.order.get
     order_id: (@ flow.order_id )
-  - flow_set: order
+  - thread_set: order
   - type: component.product.get
-    product_id: (@ flow.order.product_ids[0] )
-  - flow_set: product
+    product_id: (@ thread.order.product_ids[0] )
+  - thread_set: product
+  - ask_form: Why would you like to return this item?
+    label: Please specify reason
+    composer:
+      visibility: hide
+  - flow_set: reason
   - say: >
-      Before we can approve your return, I need to bring a human to help.
+      Thanks. Before we can approve your return, I need to bring a human to help.
       One moment, while I get someone...
   - flow: flow.escalate.ticket
     data:
-      subject: 'Return -> Order #(@ flow.order.id ) - (@ flow.product.name )'
+      subject: '♻️ Return: Order #(@ thread.order.id ) - (@ thread.product.name )'
+      comment: |
+        order #: (@ thread.order.id )
+        status: (@ thread.order.status )
+        product: (@ thread.product.name )
+        price: (@ "${:,.0f}".format(thread.product.price) )
+        reason: (@ flow.reason )
