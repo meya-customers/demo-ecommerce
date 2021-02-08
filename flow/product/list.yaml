@@ -1,0 +1,7 @@
+triggers:
+  - keyword: product_list
+steps:
+  - type: meya.shopify.component.product.list
+    integration: integration.shopify
+
+  - say: (@ flow.result | string)

@@ -22,10 +22,6 @@ steps:
         action:
           flow: flow.order.refund
           transfer: true
-      - text: Find a store
-        action:
-          flow: flow.store.locator
-          transfer: true
   - end
 
   - (login)

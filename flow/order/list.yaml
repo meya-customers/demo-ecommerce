@@ -3,43 +3,52 @@ steps:
   #  user.id (str) - id of current user passed in from page
   # Out:
   #  flow.order_id (str) - id of selected order
-  - type: component.order.list
-    user_id: (@ user.user_id )
+  - type: meya.shopify.component.customer.order.list
+    customer_id: (@ user.user_id )
+    integration: integration.shopify
+  - flow_set: orders
+
   - say: Here are the orders I found...
-    # TODO: move to bot settings
-#    composer:
-#      visibility: hide
   - delay: 1
-  - type: component.order.display
-    orders: (@ flow.result )
-  - type: component.order.get
-    order_id: (@ flow.result )
+
+  - type: meya.shopify.component.order.display
+    orders: (@ flow.orders)
+    integration: integration.shopify
+
+  - type: meya.shopify.component.order.select
+    order_id: (@ flow.result | int)
+    orders: (@ flow.orders)
+  - flow_set: selected_order
+
+  - type: meya.shopify.component.order.status
+    order: (@ flow.result)
+
   - case:
-      processing:
-        jump: processing
-      shipped:
-        jump: shipped
+      paid:
+        jump: paid
+      refunded:
+        jump: refunded
       delivered:
         jump: delivered
     default:
       jump: cant_help
-    value: (@ flow.result.status )
+    value: (@ flow.result)
 
-  - (processing)
+  - (paid)
   - say: |
       Your order is still processing and could take up to 5 days to ship.
       We'll notify you when tracking is available.
-#    composer:
-#      visibility: hide
+
   - say: Is there something you need help with on this order?
     quick_replies:
-      - text: Change my item
-        action:
-          jump: cant_help
+      # Not possible to change order item
       - text: Update shipping address
         action:
-          jump: cant_help
-      - text: Cancel my item
+          flow: flow.order.update_shipping_address
+          data:
+            order_id: (@ flow.selected_order.id)
+          transfer: true
+      - text: Cancel order
         action:
           flow: flow.order.cancel
           transfer: true
@@ -47,11 +56,12 @@ steps:
         action:
           flow: flow.start
           transfer: true
+
     # TODO: move to bot settings
 #    composer:
 #      visibility: hide
 
-  - (shipped)
+  - (in_transit)
   - say: Your order is expected to arrive in (@ flow.result.eta ) days.
     quick_replies:
       - text: Start over
@@ -60,21 +70,23 @@ steps:
           transfer: true
 
   - (delivered)
+  # ETA is not provided for API's. It's possible but is out of the scope for this task:
+  # https://shopify.dev/docs/admin-api/rest/reference/shipping-and-fulfillment/fulfillmentevent
   - say: >
-      Your order was delivered (@ flow.result.eta * -1 ) days ago.
+      Your order was delivered.
       What would like help with?
     quick_replies:
-      - text: Return item
+      - text: Refund
         action:
-          flow: flow.order.return
+          flow: flow.order.refund
           data:
-            order_id: (@ flow.result.id )
+            order: (@ flow.selected_order)
           transfer: true
       - text: Write product review
         action:
           flow: flow.product.review
           data:
-            product_id: (@ flow.result.product_ids[0] )
+            product_id: (@ flow.selected_order['line_items'][0]['product_id'])
           transfer: true
       - text: Nevermind
         action:
@@ -83,6 +95,15 @@ steps:
 
   - (cant_help)
   - say: Sorry, I can't help you with this yet, but I'm learning.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
+
+
+  - (refunded)
+  - say: That order was refunded. Please contact the store for further information.
     quick_replies:
       - text: Start over
         action:

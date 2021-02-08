@@ -1,2 +1,59 @@
 steps:
-  - say: refund
+  - if: (@ flow.get('selected_order'))
+    then:
+      jump: selected order
+    else: next
+
+  - type: meya.shopify.component.customer.order.list
+    status: open
+    customer_id: (@ user.user_id )
+    integration: integration.shopify
+  - flow_set: refund_orders
+
+  - say: Cheking orders....
+
+  - type: meya.shopify.component.order.display
+    orders: (@ flow.refund_orders)
+    integration: integration.shopify
+
+
+  - type: meya.shopify.component.order.select
+    order_id: (@ flow.result | int)
+    orders: (@ flow.refund_orders)
+  - flow_set: selected_order
+
+  - (selected order)
+  - type: meya.shopify.component.order.status
+    order: (@ flow.selected_order)
+
+  - if: (@ flow.result == "refunded")
+    then:
+      jump: not for refund
+    else: next
+
+  - type: meya.shopify.component.order.refund
+    order: (@ flow.result)
+    integration: integration.shopify
+
+  - if: (@ flow.result)
+    then:
+      jump: refund success
+    else:
+      flow: flow.escalate.ticket
+      transfer: true
+
+  - (refund success)
+  - say: Refund requested. Please check your email for further information.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
+
+  - (not for refund)
+  - say: This order is not available for refund.
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
