@@ -1,19 +1,44 @@
 steps:
-  # In:
-  #  user.id (str) - id of current user passed in from page
-  # Out:
-  #  flow.order_id (str) - id of selected order
   - type: meya.shopify.component.customer.order.list
     customer_id: (@ user.user_id )
     integration: integration.shopify
   - flow_set: orders
 
+  - ask: What orders do you want to check
+    buttons:
+      - text: paid
+        result: [paid]
+      - text: pending
+        result: [pending]
+      - text: delivered
+        result: [delivered]
+      - text: refunded
+        result: [refunded]
+      - text: all
+        result: []
+
   - say: Here are the orders I found...
   - delay: 1
-
   - type: meya.shopify.component.order.display
     orders: (@ flow.orders)
+    filter: (@ flow.result)
     integration: integration.shopify
+
+  - if: (@ flow.result)
+    then:
+      jump: orders found
+    else: next
+
+  - say: No orders available
+    quick_replies:
+     - text: start_over
+       action:
+         flow: flow.start
+         transfer: true
+
+  - (orders found)
+  - ask:
+    tiles: (@ flow.result)
 
   - type: meya.shopify.component.order.select
     order_id: (@ flow.result | int)
@@ -51,6 +76,8 @@ steps:
       - text: Cancel order
         action:
           flow: flow.order.cancel
+          data:
+            order_id: (@ flow.selected_order.id)
           transfer: true
       - text: Nevermind
         action:

@@ -1,21 +1,23 @@
 steps:
-  - say: I can help you with that, just let us know the reason you're cancelling
-    # TODO: move to bot settings
-#    composer:
-#      visibility: hide
+  - say: I can help you with that, just note that any discounts that you used will
+      be forfeited and can no longer be used.
 
-  - ask_form: Note that any discounts that you used will be forfeited and can no longer
-      be used.
-    label: Please specify
-    # TODO: move to bot settings
-#    composer:
-#      visibility: hide
+  - ask: Please let us know the reason you're cancelling
+    buttons:
+      - text: customer
+        result: customer
+      - text: fraud
+        result: fraud
+      - text: inventory
+        result: inventory
+      - text: declined
+        result: declined
+      - text: other
+        result: other
 
-  - say: |
-      I have gone ahead and put in a request to cancel this item from your order.
-      You will receive an email confirmation once this has been processed within 1 business day.
-    quick_replies:
-      - text: Start over
-        action:
-          flow: flow.start
-          transfer: true
+  - type: meya.shopify.component.order.cancel
+    reason: (@ flow.result)
+    notify: true
+    order_id: (@ flow.order_id)
+    integration: integration.shopify
+
