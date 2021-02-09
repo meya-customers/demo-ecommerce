@@ -21,3 +21,9 @@ steps:
     order_id: (@ flow.order_id)
     integration: integration.shopify
 
+  - say: Your order has been canceled
+    quick_replies:
+      - text: start_over
+        action:
+          flow: flow.start
+          transfer: true
