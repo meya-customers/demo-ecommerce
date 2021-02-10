@@ -1,42 +1,112 @@
 steps:
+  - (choose filter)
+  - flow_set:
+      fulfillment_status: any
+      financial_status: any
+      order_status: any
+
+  - ask: Please choose the order filter
+    buttons:
+      - text: Fulfillment status
+        action:
+          jump: fulfillment status
+      - text: Financial status
+        action:
+          jump: financial status
+      - text: Order status
+        action:
+          jump: order status
+      - text: See all orders
+        result: any
+  - flow_set: order_status
+  - jump: orders query
+
+  - (fulfillment status)
+  - ask: Select the fulfillment status
+    buttons:
+      - text: shipped
+        result: shipped
+      - text: partial
+        result: partial
+      - text: unshipped
+        result: unshipped
+      - text: unfulfilled
+        result: unfulfilled
+      - text: Change filter
+        action:
+          jump: choose filter
+  - flow_set: fulfillment_status
+  - jump: order status
+
+  - (financial status)
+  - ask: Select the financial status
+    buttons:
+      - text: authorized
+        result: authorized
+      - text: pending
+        result: pending
+      - text: paid
+        result: paid
+      - text: partially_paid
+        result: partially_paid
+      - text: refunded
+        result: refunded
+      - text: voided
+        result: voided
+      - text: partially_refunded
+        result: partially_refunded
+      - text: unpaid
+        result: unpaid
+      - text: Change filter
+        action:
+          jump: choose filter
+  - flow_set: financial_status
+
+  - (order status)
+  - ask: Select the order status
+    buttons:
+      - text: open
+        result: open
+      - text: closed
+        result: closed
+      - text: cancelled
+        result: cancelled
+      - text: any
+        result: any
+  - flow_set: order_status
+
+  - (orders query)
   - type: meya.shopify.component.customer.order.list
     customer_id: (@ user.user_id )
+    financial_status: (@ flow.financial_status)
+    fulfillment_status: (@ flow.fulfillment_status)
+    status: (@ flow.order_status)
     integration: integration.shopify
   - flow_set: orders
 
-  - ask: What orders do you want to check
-    buttons:
-      - text: paid
-        result: [paid]
-      - text: pending
-        result: [pending]
-      - text: delivered
-        result: [delivered]
-      - text: refunded
-        result: [refunded]
-      - text: all
-        result: []
+  - if: (@ flow.orders)
+    then:
+      jump: orders display
+    else: next
 
+  - say: Sorry! I didn't find any order for that filter.
+    quick_replies:
+      - text: Try again
+        action:
+          jump: choose filter
+      - text: No
+        action:
+          flow: flow.start
+          transfer: True
+
+
+  - (orders display)
   - say: Here are the orders I found...
   - delay: 1
   - type: meya.shopify.component.order.display
     orders: (@ flow.orders)
-    filter: (@ flow.result)
     integration: integration.shopify
 
-  - if: (@ flow.result)
-    then:
-      jump: orders found
-    else: next
-
-  - say: No orders available
-    quick_replies:
-     - text: start_over
-       action:
-         flow: flow.start
-         transfer: true
-
-  - (orders found)
   - ask:
     tiles: (@ flow.result)
 
