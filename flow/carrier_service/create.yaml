@@ -4,16 +4,16 @@ triggers:
 steps:
   - ask: What name you want for your carrier service
   - flow_set: carrier_service_name
-
-  - ask: So, do you want your carrier service to be named (@ flow.carrier_service_name )
+  - ask: So, do you want your carrier service to be named (@ flow.carrier_service_name
+      ) ?
     quick_replies:
       - text: No
         action:
           flow: flow.start
-          transfer: True
+          transfer: true
 
   - type: meya.shopify.component.carrier_service.create
-    name: (@ flow.carrier_service_name )
+    name: (@ flow.carrier_service_name)
     integration: integration.shopify
 
   - say: Carrier service sucessfully created!

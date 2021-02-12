@@ -17,17 +17,17 @@ steps:
       jump: fail
 
   - type: meya.shopify.component.customer.get
-    customer_id: (@ flow.user_id | int)
+    customer_id: (@ flow.user_id | int )
     integration: integration.shopify
 
-  - if: (@ flow.get("result"))
+  - if: (@ flow.get("result") )
     then: next
     else:
       jump: fail
 
   - flow: flow.auth.login
     data:
-      user: (@ flow.result)
+      user: (@ flow.result )
   - end:
       result: true
 
