@@ -9,7 +9,7 @@ steps:
   #  forbidden
 
   - flow_set:
-      user_id: (@ flow.get("user_id") or user.user_id)
+      user_id: (@ flow.get("user_id") or user.user_id )
 
   - if: (@ flow.user_id)
     then: next

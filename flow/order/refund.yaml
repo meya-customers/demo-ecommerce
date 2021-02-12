@@ -1,5 +1,5 @@
 steps:
-  - if: (@ flow.get('selected_order'))
+  - if: (@ flow.get('selected_order') )
     then:
       jump: selected order
     else: next
@@ -13,29 +13,29 @@ steps:
   - say: Cheking orders....
 
   - type: meya.shopify.component.order.display
-    orders: (@ flow.refund_orders)
+    orders: (@ flow.refund_orders )
     integration: integration.shopify
 
+  - ask: Here are the orders I found..
+    tiles: (@ flow.result )
 
-  - type: meya.shopify.component.order.select
-    order_id: (@ flow.result | int)
-    orders: (@ flow.refund_orders)
-  - flow_set: selected_order
+  - flow_set:
+      selected_order: (@ flow.result )
 
   - (selected order)
   - type: meya.shopify.component.order.status
-    order: (@ flow.selected_order)
+    order: (@ flow.selected_order )
 
-  - if: (@ flow.result == "refunded")
+  - if: (@ flow.result == "refunded" )
     then:
       jump: not for refund
     else: next
 
   - type: meya.shopify.component.order.refund
-    order: (@ flow.selected_order)
+    order: (@ flow.selected_order )
     integration: integration.shopify
 
-  - if: (@ flow.result)
+  - if: (@ flow.result )
     then:
       jump: refund success
     else:

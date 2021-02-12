@@ -1,9 +1,12 @@
+# requires:
+#   flow.order_id (int)
+
 steps:
   - say: I can help you with that, just note that any discounts that you used will
       be forfeited and can no longer be used.
 
   - ask: Please let us know the reason you're cancelling
-    buttons:
+    quick_replies:
       - text: customer
         result: customer
       - text: fraud
@@ -16,14 +19,14 @@ steps:
         result: other
 
   - type: meya.shopify.component.order.cancel
-    reason: (@ flow.result)
+    reason: (@ flow.result )
     notify: true
-    order_id: (@ flow.order_id)
+    order_id: (@ flow.order_id )
     integration: integration.shopify
 
   - say: Your order has been canceled
     quick_replies:
-      - text: start_over
+      - text: Start over
         action:
           flow: flow.start
           transfer: true

@@ -1,15 +1,32 @@
 steps:
+  - say: Right! I'll need your new address!
+
   - ask_form: What's the new shipping address?
-    placeholder: address
-  - flow_set: shipping_address
-  - ask_form: What's the city?
-    placeholder: city
+  - flow_set: address
+
+  - ask_form: Address 2?
+  - flow_set: address_2
+
+  - ask_form: City?
   - flow_set: city
 
+  - ask_form: Postal code?
+  - flow_set: postal_code
+
+  - ask_form: Country?
+  - flow_set: country
+
+  - ask_form: Province?
+  - flow_set: province
+
   - type: meya.shopify.component.order.update_shipping_address
-    order_id: (@ flow.order_id)
-    address: (@ flow.shipping_address)
-    city: (@ flow.city)
+    order_id: (@ flow.order_id )
+    address: (@ flow.shipping_address )
+    address_2: (@ flow.address_2 )
+    city: (@ flow.city )
+    postal_code: (@ flow.postal_code )
+    country: (@ flow.country )
+    province: (@ flow.province )
     integration: integration.shopify
 
   - if: (@ flow.result)
