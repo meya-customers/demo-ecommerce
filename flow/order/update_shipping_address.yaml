@@ -21,7 +21,7 @@ steps:
 
   - type: meya.shopify.component.order.update_shipping_address
     order_id: (@ flow.order_id )
-    address: (@ flow.shipping_address )
+    address: (@ flow.address )
     address_2: (@ flow.address_2 )
     city: (@ flow.city )
     postal_code: (@ flow.postal_code )

@@ -30,6 +30,7 @@ steps:
 
   - ask: Here are the orders I found..
     tiles: (@ flow.result )
+  - flow_set: selected_order
 
   - type: meya.shopify.component.order.status
     order: (@ flow.result )
@@ -89,7 +90,7 @@ steps:
         action:
           flow: flow.order.refund
           data:
-            order: (@ flow.selected_order )
+            selected_order: (@ flow.selected_order )
           transfer: true
       - text: Write product review
         action:

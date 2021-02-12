@@ -4,8 +4,9 @@ triggers:
 steps:
   - ask: What name you want for your carrier service
   - flow_set: carrier_service_name
-  - ask: So, do you want your carrier service to be named (@ flow.carrier_service_name
-      ) ?
+  - ask: >
+      So, do you want your carrier service
+      to be named (@ flow.carrier_service_name )?
     quick_replies:
       - text: No
         action:
