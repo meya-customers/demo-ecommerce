@@ -8,11 +8,5 @@ triggers:
       data:
         product_id: p-27182
 steps:
-  # Product review is not supported by shopify API at this moment:
-  # https://community.shopify.com/c/Shopify-APIs-SDKs/API-for-Product-Reviews-App/td-p/733579
-
-  # It is possible to implement product review building a custom solution.
-  # Using the metadata API and embedding in store pages, for more info:
-  # https://community.shopify.com/c/Shopify-APIs-SDKs/Product-Review-API-Endpoint-to-add-update-reviews/td-p/482214
   - (start)
   - say: Product review -> (@ flow.product_id )
