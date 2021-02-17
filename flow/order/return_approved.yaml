@@ -1,0 +1,24 @@
+triggers:
+  - agent_command: return_approved
+
+steps:
+  - if: (@ thread.order and thread.product )
+    then: next
+    else: end
+  - delay: 2
+  - say: >
+      ✅ Your return for Order #(@ thread.order.id ) - (@ thread.product.name )
+      has been approved.
+  - delay: 2
+  - say: >
+      Follow the instructions in the PDF below to return the item within 14 days
+      and we'll issue a refund once we receive the item.
+  - delay: 2
+
+  - url: https://prismic-io.s3.amazonaws.com/meya-website/614d4f0b-f0d3-46bb-99a1-ab989bfc6da2_return.pdf
+    filename: return-auth-order-(@ thread.order.id ).pdf
+    quick_replies:
+      - text: Start over
+        action:
+          flow: flow.start
+          transfer: true
