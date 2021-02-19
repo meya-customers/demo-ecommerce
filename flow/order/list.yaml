@@ -2,6 +2,8 @@
 #   user.id (str)
 
 steps:
+  - say: Please wait while I find your orders
+
   - type: meya.shopify.component.customer.order.list
     customer_id: (@ user.user_id )
     status: any
@@ -26,9 +28,8 @@ steps:
     orders: (@ flow.orders )
     integration: integration.shopify
 
-  - say: Please wait while I find your orders
 
-  - ask: Here are the orders I found..
+  - ask: Here are the orders I found...
     tiles: (@ flow.result )
   - flow_set: selected_order
 

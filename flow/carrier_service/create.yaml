@@ -2,13 +2,20 @@ triggers:
   - keyword: create_shopify_carrier_service
 
 steps:
+  - (name select)
   - ask: What name you want for your carrier service
   - flow_set: carrier_service_name
   - ask: >
       So, do you want your carrier service
       to be named (@ flow.carrier_service_name )?
-    quick_replies:
+    buttons:
+      - text: Yes
+        action: next
       - text: No
+        action:
+          jump: name select
+    quick_replies:
+      - text: Nevermind
         action:
           flow: flow.start
           transfer: true

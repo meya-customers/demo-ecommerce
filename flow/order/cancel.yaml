@@ -7,15 +7,11 @@ steps:
 
   - ask: Please let us know the reason you're cancelling
     quick_replies:
-      - text: customer
-        result: customer
-      - text: fraud
-        result: fraud
-      - text: inventory
+      - text: Out of stock
         result: inventory
-      - text: declined
+      - text: Payment declined
         result: declined
-      - text: other
+      - text: Other
         result: other
 
   - type: meya.shopify.component.order.cancel

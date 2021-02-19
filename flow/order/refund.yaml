@@ -4,13 +4,13 @@ steps:
       jump: selected order
     else: next
 
+  - say: Checking orders....
+
   - type: meya.shopify.component.customer.order.list
     status: any
     customer_id: (@ user.user_id )
     integration: integration.shopify
   - flow_set: refund_orders
-
-  - say: Cheking orders....
 
   - type: meya.shopify.component.order.display
     orders: (@ flow.refund_orders )
