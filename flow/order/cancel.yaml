@@ -5,17 +5,8 @@ steps:
   - say: I can help you with that, just note that any discounts that you used will
       be forfeited and can no longer be used.
 
-  - ask: Please let us know the reason you're cancelling
-    quick_replies:
-      - text: Out of stock
-        result: inventory
-      - text: Payment declined
-        result: declined
-      - text: Other
-        result: other
-
   - type: meya.shopify.component.order.cancel
-    reason: (@ flow.result )
+    reason: customer
     notify: true
     order_id: (@ flow.order_id )
     integration: integration.shopify
