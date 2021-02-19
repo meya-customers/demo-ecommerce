@@ -1,11 +1,11 @@
 steps:
   - say: Right! I'll need your new address!
 
-  - ask_form: Address line 1?
+  - ask_form: Address Line 1?
     placeholder: Street address, P.O. box, company name, c/o
   - flow_set: address
 
-  - ask_form: Address line 2 (Optional)?
+  - ask_form: Address Line 2 (Optional)?
     placeholder: Apartment, suite, unit, building, floor, etc.
   - flow_set: address_2
 
