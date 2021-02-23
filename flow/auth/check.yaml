@@ -7,18 +7,24 @@ steps:
   #  user (obj) - user objects is updated with user model
   #  OR
   #  forbidden
+
   - flow_set:
       user_id: (@ flow.get("user_id") or user.user_id )
-  - if: (@ flow.user_id )
+
+  - if: (@ flow.user_id)
     then: next
     else:
       jump: fail
-  - type: component.user.get
-    user_id: (@ flow.user_id )
+
+  - type: meya.shopify.component.customer.get
+    customer_id: (@ flow.user_id | int )
+    integration: integration.shopify
+
   - if: (@ flow.get("result") )
     then: next
     else:
       jump: fail
+
   - flow: flow.auth.login
     data:
       user: (@ flow.result )
@@ -27,6 +33,4 @@ steps:
 
   - (fail)
   - flow: flow.auth.forbidden
-    # TODO: remove this once transfer: true is fixed
-  - end:
-      result: false
+    transfer: true

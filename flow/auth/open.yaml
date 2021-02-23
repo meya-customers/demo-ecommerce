@@ -6,13 +6,15 @@ triggers:
 
 steps:
   - (page)
-  - if: (@ flow.context.get("user_id") )
+  - if: (@ flow.context.get("shopify_customer_id"))
     then: next
     else:
       flow: flow.start
       transfer: true
+
   - flow_set:
-      user_id: (@ flow.context.user_id )
+      user_id: (@ flow.context.shopify_customer_id)
+
   - jump: check
 
   - (regex)
@@ -24,4 +26,5 @@ steps:
   - flow: flow.auth.check
     data:
       user_id: (@ flow.user_id )
+
   - flow: flow.start
