@@ -15,9 +15,9 @@ steps:
       jump: orders display
     else: next
 
-  - say: Sorry! I didn't find any order for you
+  - say: Sorry! I didn't find any orders.
     quick_replies:
-      - text: No
+      - text: Ok
         action:
           flow: flow.start
           transfer: true
